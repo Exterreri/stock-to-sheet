@@ -4,7 +4,7 @@ import yfinance as yf
 import pandas as pd
 import openpyxl
 
-path = 'C:/Users/Harold/Desktop/stock-to-sheets/data/'
+path = Path.cwd()
 filename = 'stock_data.xlsx'
 
 # List of stocks I want to get data for
@@ -77,11 +77,11 @@ df = pd.DataFrame(stock_data)
 Path(path).parent.mkdir(parents=True, exist_ok=True)
 
 # Save the data to a CSV file
-df.to_excel((path + filename), index=False)
+df.to_excel(path / filename, index=False)
 print('Data saved to stock_data.xlsx')
 
 # Use openpyxl add formatting to the Excel file
-wb = openpyxl.load_workbook(path + filename)
+wb = openpyxl.load_workbook(path / filename)
 ws = wb.active
 
 currency_columns = [
@@ -155,5 +155,5 @@ for cell in ws['T'][1:]:
   elif cell.value != 'N/A' and cell.value < 1:
     cell.font = openpyxl.styles.Font(color='FF0000')  # Red
 
-wb.save(path + filename)
+wb.save(path / filename)
 print('Formatting applied to stock_data.xlsx')
