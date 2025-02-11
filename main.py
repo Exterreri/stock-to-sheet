@@ -7,21 +7,14 @@ import openpyxl
 path = Path.cwd()
 filename = 'stock_data.xlsx'
 
-# List of stocks I want to get data for
-stocks = [
-  'AAPL',
-  'MSFT',
-  'GOOGL',
-  'BA',
-  'RTX',
-  'LMT',
-  'NVDA',
-  'AMD',
-  'INTC',
-  'QCOM',
-  '^GSPC',
-  '^DJI',
-]
+# Read stock tickers from a text file
+stocks_file = path / 'stocks.txt'
+if stocks_file.exists():
+  with open(stocks_file, 'r') as file:
+    stocks = [line.strip() for line in file.readlines() if line.strip()]
+else:
+  print("Error: stocks.txt file not found.")
+  exit()
 
 # Data storage
 stock_data = []
